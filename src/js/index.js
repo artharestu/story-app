@@ -7,7 +7,11 @@ import Add from './pages/add';
 import Edit from './pages/edit';
 import Delete from './pages/delete';
 
+// Import Bootstrap
 import * as bootstrap from 'bootstrap';
+
+// Import components
+import './components/index';
 
 const routes = {
   '/': Dashboard,
@@ -21,4 +25,9 @@ const detectRoute = () => routes[window.location.pathname];
 window.addEventListener('DOMContentLoaded', async () => {
   const route = detectRoute();
   route.init();
+});
+
+document.getElementById('addstory').addEventListener('click', (event) => {
+  event.preventDefault();
+  window.location.href = '/add.html';
 });
