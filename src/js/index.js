@@ -26,8 +26,3 @@ window.addEventListener('DOMContentLoaded', async () => {
   const route = detectRoute();
   route.init();
 });
-
-document.getElementById('addstory').addEventListener('click', (event) => {
-  event.preventDefault();
-  window.location.href = '/add.html';
-});

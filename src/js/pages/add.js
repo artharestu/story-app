@@ -4,10 +4,9 @@ const Add = {
   },
 
   _initialListener() {
-    const form = document.getElementsByTagName('form');
+    const form = document.querySelector('form');
 
-    form[0].addEventListener('submit', (event) => {
-      event.preventDefault();
+    form.addEventListener('submit', (event) => {
       const name = document.getElementById('name').value;
       const description = document.getElementById('description').value;
       const photoUrl = "https://source.unsplash.com/1200x700/?" + document.getElementById('photoUrl').value;
@@ -20,11 +19,11 @@ const Add = {
         photoUrl,
         createdAt,
       }
-
-      form[0].reset();
+      event.preventDefault();
       console.log(data);
-      this._goToDashboardPage();
-
+      if (form.checkValidity()) {
+        this._goToDashboardPage();
+      }
     })
   },
   _goToDashboardPage() {
