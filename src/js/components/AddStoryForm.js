@@ -6,20 +6,32 @@ class AddStoryForm extends LitWithoutShadowDom {
     return html`
       <form
         class="d-flex flex-column align-items-center justify-content-center w-100 mb-3 p-3 
-        shadow rounded border border-1">
-        <div class="form-floating mb-3 w-100">
-          <input type="text" class="form-control" id="name" placeholder="Type Your Name...">
-          <label for="name">Name</label>
-        </div>        
-        <div class="form-floating mb-3 w-100">
-          <input type="text" class="form-control" id="photoUrl" placeholder="Try 'nature', 'food', 'history', 'animal'...">
-          <label for="photoUrl">Photo Category</label>
-        </div>  
-        <div class="form-floating mb-3 w-100">
-          <textarea class="form-control form-control-lg w-100 mb-3" type="text" placeholder="Your story..."
-          id="description" style="height: 200px"></textarea>
-          <label for="description">Your story</label>
-        </div>          
+        shadow rounded border border-1 was-validated" novalidate>                                
+        <input-with-validation
+              type="text"
+              id="name"
+              class="w-100"
+              placeholder="Your Name"
+              label="Your Name"
+              invalidFeedbackMessage="Wajib Diisi"
+              required >
+        </input-with-validation>       
+        <input-with-validation
+              type="text"
+              id="photoUrl"
+              class="w-100"
+              placeholder="Photo Category"
+              label="Photo Category"
+              invalidFeedbackMessage="Wajib Diisi"
+              required >
+        </input-with-validation>
+        <textarea-with-validation
+              class="w-100"
+              inputId="description"
+              invalidFeedbackMessage="Wajib diisi"
+              placeholder="Your story"              
+              required >
+        </textarea-with-validation>                        
         <button class="btn btn-outline-primary w-100" type="submit">
           Post
         </button>

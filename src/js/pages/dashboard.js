@@ -17,43 +17,78 @@ const Dashboard = {
 
   render(listStory) {
     const options = {
-      weekday: 'long',
+      weekday: 'short',
       year: 'numeric',
-      month: 'long',
+      month: 'short',
       day: 'numeric',
       hour: 'numeric',
       minute: 'numeric',
       hour12: false,
     };
-    document.getElementsByClassName('content')[0].innerHTML = listStory.map(data => {
+
+    document.getElementsByClassName('content')[0].innerHTML = listStory.map((data, i) => {
       const date = new Date(data.createdAt);
       const formattedDate = date.toLocaleString("id-ID", options);
-      return `        
-        <div class="card mb-3 border border-0 shadow w-50 mx-auto" id="${data.id}">
-          <div class="card-body p-5">
-            <div class="d-flex align-items-center mb-3">
-              <img src="${this.randomPhotoProfile()}" 
-              class="rounded-circle border border-primary p-1 me-1" alt="${data.name}">
-              <div class="d-flex flex-column flex-grow-1">
-                <h5 class="card-title">${data.name}</h5>
-                <div class="d-flex align-items-center">
-                  <small class="text-muted">${formattedDate}</small>
-                  <i class="bi bi-globe-asia-australia ms-2"></i>
+      if (i % 2 == 0) {
+        console.log("Pembuka " + i % 3);
+        return `
+        <div class="row g-0 justify-content-center align-items-center">
+          <div class="col-5 card mb-3 border border-0 shadow me-3" id="${data.id}">
+            <div class="card-body px-3 py-4">
+              <div class="d-flex align-items-center mb-3">
+                <img src="${this.randomPhotoProfile()}" 
+                class="rounded-circle border border-primary p-1 me-1" alt="${data.name}">
+                <div class="d-flex flex-column flex-grow-1 ps-2">
+                  <h6 class="card-title mb-0">${data.name}</h6>
+                  <div class="d-flex align-items-center mt-0">
+                    <small class="text-muted">${formattedDate}</small>
+                    <i class="bi bi-globe-asia-australia ms-2"></i>
+                  </div>
                 </div>
-              </div>
-              
-            </div>            
-            <img src="${data.photoUrl}" class="card-img-top mb-3 rounded w-100" alt="${data.name}">   
-            <i class="bi bi-suit-heart me-2"></i>
-            <i class="bi bi-chat me-2"></i>
-            <i class="bi bi-send me-2"></i>
-            <p class="card-text">${data.description}</p>            
-            <button type="button" class="btn btn-outline-primary w-25" id="edit-${data.id}">Edit</button>
-            <button type="button" class="btn btn-outline-danger w-25" id="delete-${data.id}">Delete</button>            
+                
+              </div>            
+              <img src="${data.photoUrl}" class="card-img-top mb-3 rounded w-100" alt="${data.name}">   
+              <i class="bi bi-suit-heart me-2"></i>
+              <i class="bi bi-chat me-2"></i>
+              <i class="bi bi-send me-2"></i>              
+              <p class="card-text">${data.description}</p>                          
+              <button type="button" class="btn btn-outline-primary w-100" id="edit-${data.id}">Edit</button>
+              <button type="button" class="btn btn-outline-danger w-100 mt-2" id="delete-${data.id}">Delete</button>            
+            </div>
           </div>
-        </div>
-        `
+        `}
+
+      else {
+        console.log("Penutup " + (i % 3));
+        return `
+            <div class="col-5 card mb-3 border border-0 shadow" id="${data.id}">
+              <div class="card-body px-3 py-4">
+                <div class="d-flex align-items-center mb-3">
+                  <img src="${this.randomPhotoProfile()}" 
+                  class="rounded-circle border border-primary p-1 me-1" alt="${data.name}">
+                  <div class="d-flex flex-column flex-grow-1 ps-2">
+                    <h6 class="card-title mb-0">${data.name}</h6>
+                    <div class="d-flex align-items-center mt-0">
+                      <small class="text-muted">${formattedDate}</small>
+                      <i class="bi bi-globe-asia-australia ms-1"></i>
+                    </div>
+                  </div>
+                  
+                </div>            
+                <img src="${data.photoUrl}" class="card-img-top mb-3 rounded w-100" alt="${data.name}">   
+                <i class="bi bi-suit-heart me-2"></i>
+                <i class="bi bi-chat me-2"></i>
+                <i class="bi bi-send me-2"></i>                
+                <p class="card-text">${data.description}</p> 
+                <button type="button" class="btn btn-outline-primary w-100" id="edit-${data.id}">Edit</button>
+                <button type="button" class="btn btn-outline-danger w-100 mt-2" id="delete-${data.id}">Delete</button>
+              </div>
+            </div> 
+          </div>
+          `
+      }
     }).join('');
+
     listStory.forEach((data) => {
       document.getElementById("edit-" + data.id).addEventListener('click', (event) => {
         window.location.href = '/edit.html?id=' + data.id;
@@ -62,6 +97,11 @@ const Dashboard = {
         window.location.href = '/delete.html?id=' + data.id;
       })
     })
+
+    document.getElementById('addstory').addEventListener('click', (event) => {
+      event.preventDefault();
+      window.location.href = '/add.html';
+    });
   },
   randomPhotoProfile() {
     const category = ["animal", "cartoon", "food", "history", "nature", "cat", "dog", "work",
