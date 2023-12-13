@@ -1,5 +1,6 @@
 const Add = {
   async init() {
+    await this._initialLocalData();
     this._initialListener();
   },
 
@@ -20,7 +21,11 @@ const Add = {
         createdAt,
       }
       event.preventDefault();
-      console.log(data);
+
+      const listStory = this._getLocalData();
+      listStory.push(data);
+      this._setLocalData(listStory);
+
       if (form.checkValidity()) {
         this._goToDashboardPage();
       }
@@ -29,6 +34,23 @@ const Add = {
   _goToDashboardPage() {
     window.location.href = '/';
   },
+
+  async _initialLocalData() {
+    const localData = localStorage.getItem('listStory');
+    if (!localData) {
+      const fetchRecords = await fetch('https://raw.githubusercontent.com/dicodingacademy/a565-webtools-labs/099-shared-files/proyek-awal/DATA.json');
+      const responseRecords = await fetchRecords.json();
+      localStorage.setItem('listStory', JSON.stringify(responseRecords.listStory))
+    }
+  },
+
+  _getLocalData() {
+    let localData = localStorage.getItem('listStory');
+    return JSON.parse(localData);
+  },
+  _setLocalData(data) {
+    localStorage.setItem('listStory', JSON.stringify(data));
+  }
 }
 
 export default Add;
