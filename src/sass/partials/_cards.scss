@@ -1,0 +1,16 @@
+@use '../abstracts/variables' as var;
+@use '../abstracts/mixins' as mix;
+@use 'sass:map';
+
+.content .card {
+  @include mix.bounce-shadow;
+
+  .card-body .card-img-top {
+    transition: 0.2s ease-in-out;
+    filter: grayscale(1);
+
+    &:hover {
+      filter: grayscale(0);
+    }
+  }
+}
