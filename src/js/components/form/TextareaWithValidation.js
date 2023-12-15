@@ -1,5 +1,6 @@
 import { html, nothing } from 'lit';
 import LitWithoutShadowDom from '../base/LitWithoutShadowDom';
+import { msg, updateWhenLocaleChanges } from '@lit/localize';
 
 class TextareaWithValidation extends LitWithoutShadowDom {
   static properties = {
@@ -15,6 +16,7 @@ class TextareaWithValidation extends LitWithoutShadowDom {
 
   constructor() {
     super();
+    updateWhenLocaleChanges(this);
     this._checkAvailabilityProperty();
 
     this.rows = 3;
@@ -36,14 +38,14 @@ class TextareaWithValidation extends LitWithoutShadowDom {
           id=${this.inputId || nothing}
           class="form-control form-control-lg w-100 mb-3"          
           value=${this.value || nothing}
-          placeholder=${this.placeholder || nothing}          
+          placeholder=${msg(this.placeholder)}          
           ?required=${this.required}
           @input=${(e) => (this.value = e.target.value)}
           style="height: 200px"
         ></textarea>
-        <label for="${this.inputId}">${this.placeholder}</label>
-        ${this._validFeedbackTemplate()}
-        <div class="invalid-feedback">${this.invalidFeedbackMessage}</div>
+        <label for="${this.inputId}">${msg(this.placeholder)}</label>
+        ${msg(this._validFeedbackTemplate())}
+        <div class="invalid-feedback">${msg(this.invalidFeedbackMessage)}</div>
       </div>      
     `;
   }

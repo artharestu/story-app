@@ -1,6 +1,6 @@
 import { html, nothing } from 'lit';
 import LitWithoutShadowDom from '../base/LitWithoutShadowDom';
-
+import { msg, updateWhenLocaleChanges } from '@lit/localize';
 class InputWithValidation extends LitWithoutShadowDom {
   static properties = {
     type: { type: String, reflect: true },
@@ -17,6 +17,7 @@ class InputWithValidation extends LitWithoutShadowDom {
   constructor() {
     super();
     this._checkAvailabilityProperty();
+    updateWhenLocaleChanges(this);
 
     this.type = 'text';
     this.required = false;
@@ -37,14 +38,14 @@ class InputWithValidation extends LitWithoutShadowDom {
           id=${this.id || nothing}
           class="form-control"
           type=${this.type}
-          placeholder=${this.placeholder || nothing}
+          placeholder=${msg(this.placeholder)}
           value=${this.value || nothing}
           ?required=${this.required}          
           @input=${(e) => (this.value = e.target.value)}
         />
-        <label for=${this.id}>${this.label}</label>
-        ${this._validFeedbackTemplate()}
-        <div class="invalid-feedback">${this.invalidFeedbackMessage}</div>
+        <label for=${this.id}>${msg(this.label)}</label>
+        ${msg(this._validFeedbackTemplate())}
+        <div class="invalid-feedback">${msg(this.invalidFeedbackMessage)}</div>
       </div>      
     `;
   }
