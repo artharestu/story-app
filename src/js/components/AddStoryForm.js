@@ -1,7 +1,12 @@
 import { html } from 'lit';
 import LitWithoutShadowDom from './base/LitWithoutShadowDom';
+import { msg, updateWhenLocaleChanges } from '@lit/localize';
 
 class AddStoryForm extends LitWithoutShadowDom {
+  constructor() {
+    super();
+    updateWhenLocaleChanges(this);
+  }
   render() {
     return html`
       <form
@@ -13,7 +18,7 @@ class AddStoryForm extends LitWithoutShadowDom {
               class="w-100"
               placeholder="Your Name"
               label="Your Name"
-              invalidFeedbackMessage="Wajib Diisi"
+              invalidFeedbackMessage="Required"
               required >
         </input-with-validation>       
         <input-with-validation
@@ -22,18 +27,18 @@ class AddStoryForm extends LitWithoutShadowDom {
               class="w-100"
               placeholder="Photo Category"
               label="Photo Category"
-              invalidFeedbackMessage="Wajib Diisi"
+              invalidFeedbackMessage="Required"
               required >
         </input-with-validation>
         <textarea-with-validation
               class="w-100"
               inputId="description"
-              invalidFeedbackMessage="Wajib diisi"
+              invalidFeedbackMessage="Required"
               placeholder="Your story"              
               required >
         </textarea-with-validation>                        
         <button class="btn btn-outline-primary w-100" type="submit">
-          Post
+          ${msg(`Post`)}
         </button>
       </form>
     `;

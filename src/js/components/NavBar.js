@@ -7,11 +7,13 @@ class NavBar extends LitWithoutShadowDom {
       <nav class="navbar navbar-expand-lg bg-primary shadow-lg mb-3 p-3" style="height: 70px">
         <div class="container-fluid d-flex justify-content-between align-items-center">
           <a class="navbar-brand text-light h2" href="/">Story App</a>
-          <button type="button" class="btn btn-primary" data-bs-toggle="offcanvas" data-bs-target="#offcanvas">
-            <i class="bi bi-list"></i> MENU
-          </button>
+          <div class="d-flex align-items-center ">            
+            <button type="button" class="btn btn-primary" data-bs-toggle="offcanvas" data-bs-target="#offcanvas">
+              <i class="bi bi-list"></i> MENU
+            </button>
+          </div>
         </div>
-      </nav>
+      </nav>      
       <offcanvas-menu></offcanvas-menu>
     `;
   }

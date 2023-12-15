@@ -22,17 +22,6 @@ class CardDashboard extends LitWithoutShadowDom {
 
   render() {
     const { id, storyname, description, createdAt, photoUrl } = this;
-    const options = {
-      weekday: 'short',
-      year: 'numeric',
-      month: 'short',
-      day: 'numeric',
-      hour: 'numeric',
-      minute: 'numeric',
-      hour12: false,
-    };
-    const date = new Date(createdAt);
-    const formattedDate = date.toLocaleString("id-ID", options);
     return html`  
       <div class="card mb-3 border border-0 shadow me-3" id="${id}">
         <div class="card-body px-5 py-4">
@@ -40,8 +29,8 @@ class CardDashboard extends LitWithoutShadowDom {
             
             <div class="d-flex flex-column flex-grow-1 ps-2">
               <h6 class="card-title mb-0">${storyname}</h6>
-              <div class="d-flex align-items-center mt-0">
-                <small class="text-muted">${formattedDate}</small>
+              <div class="d-flex align-items-center mt-0">                
+                <formatted-date createdAt=${createdAt}></formatted-date>
                 <i class="bi bi-globe-asia-australia ms-2"></i>
               </div>
             </div>

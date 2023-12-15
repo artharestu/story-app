@@ -1,7 +1,12 @@
 import { html } from 'lit';
 import LitWithoutShadowDom from './base/LitWithoutShadowDom';
+import { msg, updateWhenLocaleChanges } from '@lit/localize';
 
 class CardAbout extends LitWithoutShadowDom {
+  constructor() {
+    super();
+    updateWhenLocaleChanges(this);
+  }
   render() {
     return html`
       <div class="card mb-3 border border-0 shadow w-50 mx-auto" id="card">
@@ -12,11 +17,11 @@ class CardAbout extends LitWithoutShadowDom {
             width="100px" height="100px" />
           <h2 class="card-text text-center my-2">Story App</h2>
           <p class="card-text text-center my-3" id="description">
-            Story App, a user-friendly platform where you can share and discover captivating stories. Whether
+            ${msg(`Story App, a user-friendly platform where you can share and discover captivating stories. Whether
             you love writing or enjoy reading, this app lets you easily upload your stories with pictures and audio for an
             enhanced experience. Explore various genres, from exciting adventures to heartwarming tales, and connect with
             other storytellers. Story App is not just an app; it's a community where creativity and storytelling thrive.
-            Join us and let your stories come to life on Story App!
+            Join us and let your stories come to life on Story App!`)}
           </p>
         </div>
       </div>
