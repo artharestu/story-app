@@ -25,8 +25,7 @@ class CardDashboard extends LitWithoutShadowDom {
     return html`  
       <div class="card mb-3 border border-0 shadow me-3" id="${id}">
         <div class="card-body px-5 py-4">
-          <div class="d-flex align-items-center mb-3">
-            
+          <div class="d-flex align-items-center mb-3">            
             <div class="d-flex flex-column flex-grow-1 ps-2">
               <h6 class="card-title mb-0">${storyname}</h6>
               <div class="d-flex align-items-center mt-0">                

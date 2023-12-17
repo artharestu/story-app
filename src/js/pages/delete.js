@@ -4,23 +4,23 @@ const deleteData = {
   },
 
   async _initialData() {
-    const fetchRecords = await fetch('https://raw.githubusercontent.com/dicodingacademy/a565-webtools-labs/099-shared-files/proyek-awal/DATA.json');
-    const responseRecords = await fetchRecords.json();
-    if (responseRecords.error) {
-      return;
+    const localData = JSON.parse(localStorage.getItem('listStory'));
+    if (!localData) {
+      const fetchRecords = await fetch('https://raw.githubusercontent.com/dicodingacademy/a565-webtools-labs/099-shared-files/proyek-awal/DATA.json');
+      const responseRecords = await fetchRecords.json();
+      localStorage.setItem('listStory', JSON.stringify(responseRecords.listStory));
+      localData = localStorage.getItem('listStory');
     }
-    const deleteData = responseRecords.listStory.find(data => data.id === this._getTransactionId());
+    const deleteData = localData.find(data => data.id === this._getTransactionId());
     if (!deleteData) {
       return;
     }
 
-    const profile = document.getElementById('profile');
-    profile.setAttribute('src', this._randomPhotoProfile());
-    profile.setAttribute('alt', deleteData.name);
-
     document.getElementById('name').innerHTML = deleteData.name;
     document.getElementById('description').innerHTML = deleteData.description;
-    document.getElementById('date').innerHTML = deleteData.createdAt;
+
+    const createdAt = document.querySelector('formatted-date');
+    createdAt.setAttribute('createdAt', deleteData.createdAt);
 
     const image = document.getElementById('image');
     image.setAttribute('src', deleteData.photoUrl);
@@ -28,19 +28,13 @@ const deleteData = {
 
     document.getElementById('deletebutton').addEventListener('click', (event) => {
       event.preventDefault();
-      console.log(deleteData);
-      //this._goToDashboardPage();
+      localData.splice(localData.indexOf(deleteData), 1);
+      localStorage.setItem('listStory', JSON.stringify(localData));
+      this._goToDashboardPage();
     })
     document.getElementById('cancelbutton').addEventListener('click', (event) => {
       this._goToDashboardPage();
     })
-  },
-  _randomPhotoProfile() {
-    const category = ["animal", "cartoon", "food", "history", "nature", "cat", "dog", "work",
-      "movie", "music", "anime", "game", "lion", "elephant", "penguin", "tiger", "panda", "mountains",
-      "ocean", "sunset", "forest", "waterfall", "landscape", "beach", "sunrise", "night", "city", "sea", "space"];
-
-    return "https://source.unsplash.com/50x50/?" + category[Math.floor(Math.random() * category.length)];
   },
   _getTransactionId() {
     const searchParamEdit = new URLSearchParams(window.location.search);

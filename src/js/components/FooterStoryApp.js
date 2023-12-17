@@ -3,7 +3,7 @@ import { LitElement, html, css } from 'lit';
 class FooterStoryApp extends LitElement {
   static styles = css`
       footer {
-        width: 100%;
+        width: 97vw;
         background-color: rgba(0, 0, 0, 0.8);
         color: white;
         text-align: center;
