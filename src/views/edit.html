@@ -15,20 +15,7 @@
   <nav-bar></nav-bar>
   <main class="container d-flex flex-column align-items-center justify-content-center mt-5">
     <div class="mb-3 w-50">
-      <form
-        class="d-flex flex-column align-items-center justify-content-center w-100 mb-3 p-3 shadow rounded border border-1">
-        <input class="form-control form-control-lg w-100 mb-3" type="text" placeholder="Your Name" id="name" />
-        <input class="form-control form-control-lg w-100 mb-3" type="text" id="photoUrl"
-          placeholder="Try 'nature', 'food', 'history', 'animal'..." />
-        <textarea class="form-control form-control-lg w-100 mb-3" type="text" placeholder="Your story..."
-          id="description" rows="10"></textarea>
-        <button class="btn btn-outline-primary w-100" type="submit" id="edit">
-          Edit
-        </button>
-        <button class="btn btn-outline-danger w-100" type="button" id="cancel">
-          Cancel
-        </button>
-      </form>
+      <edit-story-form></edit-story-form>
     </div>
   </main>
 </body>

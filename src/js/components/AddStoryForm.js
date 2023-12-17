@@ -33,7 +33,7 @@ class AddStoryForm extends LitWithoutShadowDom {
         <textarea-with-validation
               class="w-100"
               inputId="description"
-              invalidFeedbackMessage="Required"
+              invalidFeedbackMessage="Required"              
               placeholder="Your story"              
               required >
         </textarea-with-validation>                        

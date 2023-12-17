@@ -4,18 +4,24 @@ const edit = {
   },
 
   async _initialData() {
-    const fetchRecords = await fetch('https://raw.githubusercontent.com/dicodingacademy/a565-webtools-labs/099-shared-files/proyek-awal/DATA.json');
-    const responseRecords = await fetchRecords.json();
-    if (responseRecords.error) {
-      return;
+    const localData = JSON.parse(localStorage.getItem('listStory'));
+    if (!localData) {
+      const fetchRecords = await fetch('https://raw.githubusercontent.com/dicodingacademy/a565-webtools-labs/099-shared-files/proyek-awal/DATA.json');
+      const responseRecords = await fetchRecords.json();
+      localStorage.setItem('listStory', JSON.stringify(responseRecords.listStory));
+      localData = localStorage.getItem('listStory');
     }
-    const editData = responseRecords.listStory.find(data => data.id === this._getTransactionId());
+    const editData = localData.find(data => data.id === this._getTransactionId());
     if (!editData) {
       return;
     }
     document.getElementById('name').value = editData.name;
     document.getElementById('description').value = editData.description;
-    document.getElementById('photoUrl').value = editData.photoUrl;
+
+    const splitUrl = editData.photoUrl.split("/");
+    let categoryWithQuestionMark = splitUrl[splitUrl.length - 1];
+    let category = categoryWithQuestionMark.split("?")[1];
+    document.getElementById('photoUrl').value = category;
 
     document.getElementsByTagName('form')[0].addEventListener('submit', (event) => {
       event.preventDefault();
@@ -23,7 +29,13 @@ const edit = {
       editData.description = document.getElementById('description').value;
       editData.photoUrl = "https://source.unsplash.com/1200x700/?" + document.getElementById('photoUrl').value;
       console.log(editData);
-      //this._goToDashboardPage();
+
+      const index = localData.findIndex(data => data.id === this._getTransactionId());
+      localData[index] = editData;
+
+      localStorage.setItem('listStory', JSON.stringify(localData));
+
+      this._goToDashboardPage();
     })
 
     document.getElementById('cancel').addEventListener('click', (event) => {

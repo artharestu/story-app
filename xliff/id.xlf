@@ -60,6 +60,30 @@
   <source>Photo Category</source>
   <target>Kategori Foto</target>
 </trans-unit>
+<trans-unit id="sc4bcadba8e631b86">
+  <source>name</source>
+  <target>nama</target>
+</trans-unit>
+<trans-unit id="s80da2297736ac8d4">
+  <source>Are you sure you want to delete this story?</source>
+  <target>Apakah Anda yakin ingin menghapus cerita ini?</target>
+</trans-unit>
+<trans-unit id="se4dd2f14317a0b77">
+  <source>Yes, delete</source>
+  <target>Ya, hapus</target>
+</trans-unit>
+<trans-unit id="s78b1a1cf4164573c">
+  <source>No, cancel</source>
+  <target>Tidak, batal</target>
+</trans-unit>
+<trans-unit id="s64ef2a6c2dd1d3d1">
+  <source>Edit</source>
+  <target>Ubah</target>
+</trans-unit>
+<trans-unit id="s2ceb11be2290bb1b">
+  <source>Cancel</source>
+  <target>Batal</target>
+</trans-unit>
 </body>
 </file>
 </xliff>

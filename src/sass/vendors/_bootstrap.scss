@@ -1,4 +1,9 @@
 @use '../vendors-extensions/colors' as color;
+@use '../vendors-extensions/buttons' as btn;
+@use '../vendors-extensions/closebutton' as close;
+@use '../vendors-extensions/navbar' as navbar;
+@use '../vendors-extensions/offcanvas' as offcanvas;
+@use '../vendors-extensions/card' as card;
 
 // ==================================================
 // Bootstrap
@@ -17,6 +22,70 @@
 
 // Menerapkan/override variables Bootstrap apa pun di sini
 $theme-colors: map-merge($theme-colors, color.$theme-colors);
+
+$btn-padding-x: btn.$btn-padding-x;
+$btn-padding-y: btn.$btn-padding-y;
+$btn-font-family: btn.$btn-font-family;
+$btn-font-size: btn.$btn-font-size;
+$btn-font-weight: btn.$btn-font-weight;
+$btn-line-height: btn.$btn-line-height;
+$btn-color: btn.$btn-color;
+$btn-border-width: btn.$btn-border-width;
+$btn-border-radius: btn.$btn-border-radius;
+$btn-box-shadow: btn.$btn-box-shadow;
+$btn-disabled-opacity: btn.$btn-disabled-opacity;
+
+$btn-close-width: close.$btn-close-width;
+$btn-close-height: close.$btn-close-height;
+$btn-close-padding-x: close.$btn-close-padding-x;
+$btn-close-padding-y: close.$btn-close-padding-y;
+$btn-close-color: close.$btn-close-color;
+$btn-close-focus-shadow: close.$btn-close-focus-shadow;
+$btn-close-opacity: close.$btn-close-opacity;
+$btn-close-hover-opacity: close.$btn-close-hover-opacity;
+$btn-close-focus-opacity: close.$btn-close-focus-opacity;
+$btn-close-disabled-opacity: close.$btn-close-disabled-opacity;
+
+$offcanvas-padding-y: offcanvas.$offcanvas-padding-y;
+$offcanvas-padding-x: offcanvas.$offcanvas-padding-x;
+$offcanvas-horizontal-width: offcanvas.$offcanvas-horizontal-width;
+$offcanvas-vertical-height: offcanvas.$offcanvas-vertical-height;
+$offcanvas-transition-duration: offcanvas.$offcanvas-transition-duration;
+$offcanvas-border-color: offcanvas.$offcanvas-border-color;
+$offcanvas-border-width: offcanvas.$offcanvas-border-width;
+$offcanvas-title-line-height: offcanvas.$offcanvas-title-line-height;
+$offcanvas-bg-color: offcanvas.$offcanvas-bg-color;
+$offcanvas-color: offcanvas.$offcanvas-color;
+$offcanvas-box-shadow: offcanvas.$offcanvas-box-shadow;
+
+$card-spacer-y: card.$card-spacer-y;
+$card-spacer-x: card.$card-spacer-x;
+$card-title-spacer-y: card.$card-title-spacer-y;
+$card-title-color: card.$card-title-color;
+$card-subtitle-color: card.$card-subtitle-color;
+$card-border-color: card.$card-border-color;
+$card-bg: card.$card-bg;
+$card-color: card.$card-color;
+$card-border-width: card.$card-border-width;
+$card-border-radius: card.$card-border-radius;
+$card-inner-border-radius: card.$card-inner-border-radius;
+$card-cap-padding-y: card.$card-cap-padding-y;
+$card-cap-padding-x: card.$card-cap-padding-x;
+$card-cap-bg: card.$card-cap-bg;
+$card-cap-color: card.$card-cap-color;
+$card-height: card.$card-height;
+$card-img-overlay-padding: card.$card-img-overlay-padding;
+$card-group-margin: card.$card-group-margin;
+
+$navbar-padding-y: navbar.$navbar-padding-y;
+$navbar-padding-x: navbar.$navbar-padding-x;
+$navbar-nav-link-padding-x: navbar.$navbar-nav-link-padding-x;
+$navbar-brand-font-size: navbar.$navbar-brand-font-size;
+$nav-link-height: navbar.$nav-link-height;
+$navbar-brand-height: navbar.$navbar-brand-height;
+$navbar-brand-padding-y: navbar.$navbar-brand-padding-y;
+$navbar-brand-margin-end: navbar.$navbar-brand-margin-end;
+
 //
 // Konfigurasi Bootstrap
 //
