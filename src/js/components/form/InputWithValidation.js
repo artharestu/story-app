@@ -6,7 +6,6 @@ class InputWithValidation extends LitWithoutShadowDom {
     type: { type: String, reflect: true },
     id: { type: String, reflect: true },
     required: { type: Boolean, reflect: true },
-    placeholder: { type: String, reflect: true },
     value: { type: String, reflect: true },
     label: { type: String, reflect: true },
 
@@ -37,14 +36,14 @@ class InputWithValidation extends LitWithoutShadowDom {
         <input
           id=${this.id || nothing}
           class="form-control"
-          type=${this.type}
-          placeholder=${msg(this.placeholder)}
+          type=${this.type}          
           value=${this.value || nothing}
-          ?required=${this.required}          
+          ?required=${this.required}
+          accept=".jpg, .jpeg, .png"
           @input=${(e) => (this.value = e.target.value)}
         />
         <label for=${this.id}>${msg(this.label)}</label>
-        ${msg(this._validFeedbackTemplate())}
+        ${this._validFeedbackTemplate()}
         <div class="invalid-feedback">${msg(this.invalidFeedbackMessage)}</div>
       </div>      
     `;
@@ -52,7 +51,7 @@ class InputWithValidation extends LitWithoutShadowDom {
 
   _validFeedbackTemplate() {
     if (this.validFeedbackMessage) {
-      return html` <div class="valid-feedback">${this.validFeedbackMessage}</div> `;
+      return html`<div class="valid-feedback"> ${msg(this.validFeedbackMessage)}</div> `;
     }
 
     return html``;

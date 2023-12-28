@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>
+    <%= htmlWebpackPlugin.options.title %> | Story App
+  </title>
+</head>
+
+<body>
+  <main class="min-vh-100 d-flex">
+    <div class="m-auto container py-5">
+      <div class="row justify-content-center">
+        <div class="col-12 col-md-6 col-lg-4">
+          <h1 class="text-center">Registrasi</h1>
+
+          <form id="registerForm" novalidate>
+            <div class="mb-3">
+              <input-with-validation type="text" id="validationCustomRecordName" class="w-100" label="Nama"
+                invalidFeedbackMessage="Required" required>
+              </input-with-validation>
+            </div>
+
+            <div class="mb-3">
+              <input-with-validation type="text" id="validationCustomEmail" class="w-100" label="Email"
+                invalidFeedbackMessage="Required" required>
+              </input-with-validation>
+            </div>
+
+            <div class="mb-3">
+              <input-with-validation type="password" id="validationCustomPassword" class="w-100" label="Password"
+                invalidFeedbackMessage="Required" required>
+              </input-with-validation>
+            </div>
+
+            <div class="col-12 text-end">
+              <button class="btn btn-primary w-100" type="submit" id="registerbutton">Submit</button>
+            </div>
+            <div>
+              <p class="text-primary font-monospace text-sm text-center" id="errormessage"></p>
+            </div>
+          </form>
+
+          <div class="mt-4 text-center">
+            Sudah punya akun? <a href="/auth/login.html">Login</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</body>
+
+</html>

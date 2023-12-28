@@ -50,19 +50,20 @@ module.exports = {
       template: path.resolve(__dirname, 'src/views/add.html'),
     }),
     new HtmlWebpackPlugin({
-      title: 'Edit Story',
-      filename: 'edit.html',
-      template: path.resolve(__dirname, 'src/views/edit.html'),
-    }),
-    new HtmlWebpackPlugin({
-      title: 'Delete Story',
-      filename: 'delete.html',
-      template: path.resolve(__dirname, 'src/views/delete.html'),
-    }),
-    new HtmlWebpackPlugin({
       title: 'About Us',
       filename: 'about.html',
       template: path.resolve(__dirname, 'src/views/about.html'),
+    }),
+    // Auth pages
+    new HtmlWebpackPlugin({
+      title: 'Login',
+      filename: 'auth/login.html',
+      template: path.resolve(__dirname, 'src/views/auth/login.html'),
+    }),
+    new HtmlWebpackPlugin({
+      title: 'Register',
+      filename: 'auth/register.html',
+      template: path.resolve(__dirname, 'src/views/auth/register.html'),
     }),
     new CleanWebpackPlugin(),
   ],

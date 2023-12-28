@@ -1,17 +1,25 @@
+import CheckUserAuth from './auth/check-user-auth';
+import Transactions from '../network/transactions';
+
 const Dashboard = {
   init() {
+    CheckUserAuth.checkLoginState();
+
     this._initialData();
   },
 
-  _initialData() {
-    const listStory = localStorage.getItem('listStory');
-    if (listStory) {
-      this.render(JSON.parse(listStory));
-    }
+  async _initialData() {
+    const listStory = await Transactions.getAll();
+    this.render(listStory.data.listStory);
   },
 
   render(listStory) {
-    document.getElementsByClassName('content')[0].innerHTML = listStory.map((data, i) => {
+    const content = document.getElementsByClassName('content')[0];
+    if (listStory.length == 0) {
+      content.innerHTML = `<dashboard-placeholder></dashboard-placeholder>`;
+      return;
+    }
+    content.innerHTML += listStory.map((data, i) => {
       if (i % 2 == 0) {
         return `
           <div class="row g-0 justify-content-center align-items-center">
