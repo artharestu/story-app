@@ -1,56 +1,41 @@
+import Transactions from '../network/transactions';
+import CheckUserAuth from './auth/check-user-auth';
+
 const Add = {
-  async init() {
-    await this._initialLocalData();
+  init() {
+    CheckUserAuth.checkLoginState();
     this._initialListener();
   },
 
   _initialListener() {
     const form = document.querySelector('form');
 
-    form.addEventListener('submit', (event) => {
-      const name = document.getElementById('name').value;
-      const description = document.getElementById('description').value;
-      const photoUrl = "https://source.unsplash.com/1200x700/?" + document.getElementById('photoUrl').value;
-      const id = "story-" + Date.now();
-      const createdAt = new Date().toISOString();
-      const data = {
-        id,
-        name,
-        description,
-        photoUrl,
-        createdAt,
-      }
+    form.addEventListener('submit', async (event) => {
       event.preventDefault();
+      event.stopPropagation();
 
-      const listStory = this._getLocalData();
-      listStory.push(data);
-      this._setLocalData(listStory);
+      form.classList.add('was-validated');
 
-      if (form.checkValidity()) {
-        this._goToDashboardPage();
-      }
+      const description = document.getElementById('description').value;
+      const photoImg = document.querySelector('#photoUrl');
+      const photo = photoImg.files[0];
+
+      await this._sendPost({ description, photo })
     })
   },
   _goToDashboardPage() {
     window.location.href = '/';
   },
+  async _sendPost(data) {
+    try {
+      await Transactions.add(data);
+      window.alert('New story added successfully');
 
-  async _initialLocalData() {
-    const localData = localStorage.getItem('listStory');
-    if (!localData) {
-      const fetchRecords = await fetch('https://raw.githubusercontent.com/dicodingacademy/a565-webtools-labs/099-shared-files/proyek-awal/DATA.json');
-      const responseRecords = await fetchRecords.json();
-      localStorage.setItem('listStory', JSON.stringify(responseRecords.listStory))
+      this._goToDashboardPage();
+    } catch (error) {
+      console.error(error);
     }
   },
-
-  _getLocalData() {
-    let localData = localStorage.getItem('listStory');
-    return JSON.parse(localData);
-  },
-  _setLocalData(data) {
-    localStorage.setItem('listStory', JSON.stringify(data));
-  }
 }
 
 export default Add;

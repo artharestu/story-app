@@ -1,10 +1,19 @@
 import { html } from 'lit';
 import LitWithoutShadowDom from './base/LitWithoutShadowDom';
 import { msg, updateWhenLocaleChanges } from '@lit/localize';
+import Utils from '../utils/utils';
+import Config from '../config/config';
+import CheckUserAuth from '../pages/auth/check-user-auth';
+
 class OffCanvasMenu extends LitWithoutShadowDom {
   constructor() {
     super();
     updateWhenLocaleChanges(this);
+  }
+  _userLogOut(event) {
+    event.preventDefault();
+    Utils.destroyUserToken(Config.USER_TOKEN_KEY);
+    CheckUserAuth.checkLoginState();
   }
   render() {
     return html`
@@ -24,6 +33,9 @@ class OffCanvasMenu extends LitWithoutShadowDom {
           </button>
           <button type="button" class="btn btn-outline-primary w-100 p-2 my-1" onclick="window.location.href='/about.html'">
             ${msg(`About Us`)}
+          </button>
+          <button type="button" class="btn btn-outline-primary w-100 p-2 my-1" @click=${this._userLogOut}>
+            Logout
           </button>
           <p class="mt-3">
             ${msg(`Choose your language: `)}

@@ -6,10 +6,10 @@ import './AddStoryForm'
 import './AddStoryButton'
 import './FooterStoryApp';
 import './FormattedDate';
-import './DeleteStoryCard';
-import './EditStoryForm';
 
 import './form/InputWithValidation';
 import './form/TextareaWithValidation';
 
 import './LocalePicker';
+
+import './DashboardPlaceholder';

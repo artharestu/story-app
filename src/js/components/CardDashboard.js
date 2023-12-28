@@ -22,11 +22,12 @@ class CardDashboard extends LitWithoutShadowDom {
 
   render() {
     const { id, storyname, description, createdAt, photoUrl } = this;
+    const shortDescription = description.substring(0, 160);
     return html`  
       <div class="card mb-3 border border-0 shadow me-3" id="${id}">
         <div class="card-body px-5 py-4">
           <div class="d-flex align-items-center mb-3">            
-            <div class="d-flex flex-column flex-grow-1 ps-2">
+            <div class="d-flex flex-column flex-grow-1 ps-1">
               <h6 class="card-title mb-0">${storyname}</h6>
               <div class="d-flex align-items-center mt-0">                
                 <formatted-date createdAt=${createdAt}></formatted-date>
@@ -35,15 +36,12 @@ class CardDashboard extends LitWithoutShadowDom {
             </div>
             
           </div>            
-          <img src="${photoUrl}" class="card-img-top mb-3 rounded w-100" alt="${storyname}">   
+          <img src="${photoUrl}" class="card-img-top mb-3 rounded w-100 h-100" alt="${storyname}" 
+            style="object-fit: cover; max-height: 200px; min-height: 150px;">
           <i class="bi bi-suit-heart me-2"></i>
           <i class="bi bi-chat me-2"></i>
           <i class="bi bi-send me-2"></i>              
-          <p class="card-text" style="height: 25vh">${description}</p>                          
-          <button type="button" class="btn btn-outline-primary w-100" id="edit-${id}" 
-            onclick="window.location.href = '/edit.html?id=${id}'">Edit</button>
-          <button type="button" class="btn btn-outline-danger w-100 mt-2" id="delete-${id}"
-            onclick="window.location.href = '/delete.html?id=${id}'">Delete</button>            
+          <p class="card-text" style="height: 20vh">${shortDescription}</p>                                    
         </div>
       </div>
     `;
