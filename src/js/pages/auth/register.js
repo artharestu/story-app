@@ -5,10 +5,10 @@ const Register = {
   async init() {
     CheckUserAuth.checkLoginState();
 
-    this._initialListener();
+    this.initialListener();
   },
 
-  _initialListener() {
+  initialListener() {
     const registerForm = document.querySelector('#registerForm');
     registerForm.addEventListener(
       'submit',
@@ -17,34 +17,34 @@ const Register = {
         event.stopPropagation();
 
         registerForm.classList.add('was-validated');
-        await this._getRegistered();
+        await this.getRegistered();
       },
       false,
     );
   },
 
-  async _getRegistered() {
-    const formData = this._getFormData();
+  async getRegistered() {
+    const formData = this.getFormData();
 
-    if (this._validateFormData({ ...formData })) {
+    if (this.validateFormData({ ...formData })) {
       console.log('formData');
       console.log(formData);
 
-      this._register(true);
+      this.register(true);
       try {
-        const response = await Auth.register({
+        await Auth.register({
           name: formData.name,
           email: formData.email,
           password: formData.password,
         });
-        this._register(false);
+        this.register(false);
 
-        this._goToLoginPage();
+        this.goToLoginPage();
       } catch (error) {
-        this._register(false);
+        this.register(false);
         const errorMessage = document.querySelector('#errormessage');
         if (error.response) {
-          errorMessage.innerHTML = "Message: " + error.response.data.message;
+          errorMessage.innerHTML = `Message: ${error.response.data.message}`;
         } else if (error.request) {
           console.error(error.request);
         } else {
@@ -54,7 +54,7 @@ const Register = {
     }
   },
 
-  _register(status) {
+  register(status) {
     const registerButton = document.querySelector('#registerbutton');
     const inputEmail = document.querySelector('#validationCustomEmail');
     const inputPassword = document.querySelector('#validationCustomPassword');
@@ -75,7 +75,7 @@ const Register = {
     }
   },
 
-  _getFormData() {
+  getFormData() {
     const name = document.querySelector('#validationCustomRecordName');
     const email = document.querySelector('#validationCustomEmail');
     const password = document.querySelector('#validationCustomPassword');
@@ -87,15 +87,14 @@ const Register = {
     };
   },
 
-  _validateFormData(formData) {
+  validateFormData(formData) {
     const formDataFiltered = Object.values(formData).filter((item) => item === '');
 
     return formDataFiltered.length === 0;
   },
 
-  _goToLoginPage() {
+  goToLoginPage() {
     window.location.href = '/auth/login.html';
   },
 };
-
 export default Register;

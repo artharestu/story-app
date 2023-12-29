@@ -7,10 +7,10 @@ const Login = {
   async init() {
     CheckUserAuth.checkLoginState();
 
-    this._initialListener();
+    this.initialListener();
   },
 
-  _initialListener() {
+  initialListener() {
     const loginForm = document.querySelector('#loginForm');
     loginForm.addEventListener(
       'submit',
@@ -20,20 +20,44 @@ const Login = {
 
         loginForm.classList.add('was-validated');
 
-        await this._getLogged();
+        await this.getLogged();
       },
       false,
     );
+
+    const viewPassword = document.querySelector('#viewpassword');
+    viewPassword.addEventListener(
+      'click',
+      () => {
+        const inputPassword = document.querySelector('#validationCustomPassword');
+        if (inputPassword.type === 'password') {
+          inputPassword.type = 'text';
+          viewPassword.innerHTML = '<i class="bi bi-eye"></i>';
+        } else {
+          inputPassword.type = 'password';
+          viewPassword.innerHTML = '<i class="bi bi-eye-slash"></i>';
+        }
+      },
+    );
+
+    const inputPassword = document.getElementById('validationCustomPassword');
+    if (inputPassword.value === '') {
+      inputPassword.setCustomValidity('Password cannot be empty');
+    } else if (inputPassword.value.length < 8) {
+      inputPassword.setCustomValidity('Password must be at least 8 characters');
+    } else {
+      inputPassword.setCustomValidity('');
+    }
   },
 
-  async _getLogged() {
-    const formData = this._getFormData();
+  async getLogged() {
+    const formData = this.getFormData();
 
-    if (this._validateFormData({ ...formData })) {
+    if (this.validateFormData({ ...formData })) {
       console.log('formData');
       console.log(formData);
 
-      this._login(true);
+      this.login(true);
 
       try {
         const response = await Auth.login({
@@ -43,13 +67,13 @@ const Login = {
         console.log(response);
         Utils.setUserToken(Config.USER_TOKEN_KEY, response.data.loginResult.token);
 
-        this._goToDashboardPage();
+        this.goToDashboardPage();
       } catch (error) {
-        this._login(false);
+        this.login(false);
         const errorMessage = document.querySelector('#errormessage');
 
         if (error.response) {
-          errorMessage.innerHTML = "Message: " + error.response.data.message;
+          errorMessage.innerHTML = `Message: ${error.response.data.message}`;
         } else if (error.request) {
           console.error(error.request);
         } else {
@@ -59,7 +83,7 @@ const Login = {
     }
   },
 
-  _getFormData() {
+  getFormData() {
     const email = document.querySelector('#validationCustomRecordEmail');
     const password = document.querySelector('#validationCustomPassword');
 
@@ -69,7 +93,7 @@ const Login = {
     };
   },
 
-  _login(status) {
+  login(status) {
     const loginButton = document.querySelector('#loginbutton');
     const inputEmail = document.querySelector('#validationCustomRecordEmail');
     const inputPassword = document.querySelector('#validationCustomPassword');
@@ -89,15 +113,14 @@ const Login = {
     }
   },
 
-  _validateFormData(formData) {
+  validateFormData(formData) {
     const formDataFiltered = Object.values(formData).filter((item) => item === '');
 
     return formDataFiltered.length === 0;
   },
 
-  _goToDashboardPage() {
+  goToDashboardPage() {
     window.location.href = '/';
   },
 };
-
 export default Login;

@@ -4,16 +4,16 @@ import Utils from '../utils/utils';
 import Config from '../config/config';
 
 const Transactions = {
-  async getAll() {
-    return await axios.get(ApiEndpoint.GET_ALL_DATA, {
+  getAll() {
+    return axios.get(ApiEndpoint.GET_ALL_DATA, {
       headers: {
         Authorization: `Bearer ${Utils.getUserToken(Config.USER_TOKEN_KEY)}`,
       },
     });
   },
 
-  async add(data) {
-    return await axios.post(ApiEndpoint.ADD_DATA, data, {
+  add(data) {
+    return axios.post(ApiEndpoint.ADD_DATA, data, {
       headers: {
         Authorization: `Bearer ${Utils.getUserToken(Config.USER_TOKEN_KEY)}`,
         'Content-Type': 'multipart/form-data',

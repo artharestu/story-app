@@ -4,10 +4,10 @@ import CheckUserAuth from './auth/check-user-auth';
 const Add = {
   init() {
     CheckUserAuth.checkLoginState();
-    this._initialListener();
+    this.initialListener();
   },
 
-  _initialListener() {
+  initialListener() {
     const form = document.querySelector('form');
 
     form.addEventListener('submit', async (event) => {
@@ -20,22 +20,19 @@ const Add = {
       const photoImg = document.querySelector('#photoUrl');
       const photo = photoImg.files[0];
 
-      await this._sendPost({ description, photo })
-    })
+      await this.sendPost({ description, photo });
+    });
   },
-  _goToDashboardPage() {
+  goToDashboardPage() {
     window.location.href = '/';
   },
-  async _sendPost(data) {
+  async sendPost(data) {
     try {
       await Transactions.add(data);
-      window.alert('New story added successfully');
-
-      this._goToDashboardPage();
+      this.goToDashboardPage();
     } catch (error) {
-      console.error(error);
+      console.log(error);
     }
   },
-}
-
+};
 export default Add;
