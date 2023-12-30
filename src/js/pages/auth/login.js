@@ -4,23 +4,59 @@ import Utils from '../../utils/utils';
 import CheckUserAuth from './check-user-auth';
 
 const Login = {
-  async init() {
+  init() {
     CheckUserAuth.checkLoginState();
 
     this.initialListener();
   },
 
   initialListener() {
-    const loginForm = document.querySelector('#loginForm');
-    loginForm.addEventListener(
+    const form = document.querySelector('form');
+    const inputPassword = document.getElementById('validationCustomPassword');
+    const invalidFeedback = document.querySelector('.invalid-feedback-password');
+    const inputEmail = document.getElementById('validationCustomRecordEmail');
+    const invalidFeedbackEmail = document.querySelector('.invalid-feedback-email');
+
+    form.addEventListener(
       'submit',
       async (event) => {
-        event.preventDefault();
-        event.stopPropagation();
+        if (!form.checkValidity()) {
+          event.preventDefault();
+          event.stopPropagation();
+        }
 
-        loginForm.classList.add('was-validated');
+        let isValidEmailAddress = false;
+        let isValidPassword = false;
 
-        await this.getLogged();
+        if (inputPassword.value === '') {
+          invalidFeedback.textContent = invalidFeedback.getAttribute('data-error-empty');
+          inputPassword.setCustomValidity('Password cannot be empty');
+        } else if (inputPassword.value.length < 8) {
+          invalidFeedback.textContent = invalidFeedback.getAttribute('data-error-length');
+          inputPassword.setCustomValidity('Password must be at least 8 characters');
+        } else {
+          invalidFeedback.textContent = '';
+          inputPassword.setCustomValidity('');
+          isValidPassword = true;
+        }
+
+        if (inputEmail.value === '') {
+          invalidFeedbackEmail.textContent = 'Email cannot be empty';
+          inputEmail.setCustomValidity('Email cannot be empty');
+        } else if (!this.isValidEmail(inputEmail.value)) {
+          invalidFeedbackEmail.textContent = invalidFeedbackEmail.getAttribute('data-error-email');
+          inputEmail.setCustomValidity('Invalid email address');
+        } else {
+          invalidFeedbackEmail.textContent = '';
+          inputEmail.setCustomValidity('');
+          isValidEmailAddress = true;
+        }
+
+        if (isValidEmailAddress && isValidPassword) {
+          await this.getLogged();
+        }
+
+        form.classList.add('was-validated');
       },
       false,
     );
@@ -29,7 +65,6 @@ const Login = {
     viewPassword.addEventListener(
       'click',
       () => {
-        const inputPassword = document.querySelector('#validationCustomPassword');
         if (inputPassword.type === 'password') {
           inputPassword.type = 'text';
           viewPassword.innerHTML = '<i class="bi bi-eye"></i>';
@@ -39,24 +74,16 @@ const Login = {
         }
       },
     );
+  },
 
-    const inputPassword = document.getElementById('validationCustomPassword');
-    if (inputPassword.value === '') {
-      inputPassword.setCustomValidity('Password cannot be empty');
-    } else if (inputPassword.value.length < 8) {
-      inputPassword.setCustomValidity('Password must be at least 8 characters');
-    } else {
-      inputPassword.setCustomValidity('');
-    }
+  isValidEmail(email) {
+    return /\S+@\S+\.\S+/.test(email);
   },
 
   async getLogged() {
     const formData = this.getFormData();
 
     if (this.validateFormData({ ...formData })) {
-      console.log('formData');
-      console.log(formData);
-
       this.login(true);
 
       try {
@@ -64,16 +91,16 @@ const Login = {
           email: formData.email,
           password: formData.password,
         });
-        console.log(response);
+        console.log(response.data);
         Utils.setUserToken(Config.USER_TOKEN_KEY, response.data.loginResult.token);
 
         this.goToDashboardPage();
       } catch (error) {
+        console.log(error);
         this.login(false);
         const errorMessage = document.querySelector('#errormessage');
-
         if (error.response) {
-          errorMessage.innerHTML = `Message: ${error.response.data.message}`;
+          errorMessage.innerHTML = 'Email or password is incorrect!';
         } else if (error.request) {
           console.error(error.request);
         } else {

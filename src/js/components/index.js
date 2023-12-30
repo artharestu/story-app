@@ -9,7 +9,8 @@ import './FormattedDate';
 
 import './form/InputWithValidation';
 import './form/TextareaWithValidation';
-import './form/InputPassword';
+import './form/InputPasswordWithValidation';
+import './form/InputEmailWithValidation';
 
 import './LocalePicker';
 

@@ -12,6 +12,7 @@
     "linebreak-style": "off",
     "no-console": "off",
     "class-methods-use-this": "off",
-    "no-return-assign": "off"
+    "no-return-assign": "off",
+    "import/no-extraneous-dependencies": "off"
   }
 }
