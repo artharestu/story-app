@@ -24,7 +24,7 @@ class InputImage extends LitWithoutShadowDom {
   render() {
     return html`
       <div style="width: 100%; height: 20rem" class="mb-3 ${!this.defaultImage ? 'd-none' : ''}">
-        ${this._imagePreviewTemplate()}
+        ${this.imagePreviewTemplate()}
       </div>
       <input
         type="file"
@@ -32,14 +32,14 @@ class InputImage extends LitWithoutShadowDom {
         id=${this.inputId || nothing}
         accept="image/*"
         ?required=${this.required}
-        @change=${this._updatePhotoPreview}
+        @change=${this.updatePhotoPreview}
       />
 
-      ${this._feedbackTemplate()}
+      ${this.feedbackTemplate()}
     `;
   }
 
-  _updatePhotoPreview() {
+  updatePhotoPreview() {
     const evidenceImgChange = document.querySelector('#validationCustomEvidenceImgChange');
     const evidenceImgInput = document.querySelector('#validationCustomEvidence');
 
@@ -64,7 +64,7 @@ class InputImage extends LitWithoutShadowDom {
     reader.readAsDataURL(photo);
   }
 
-  _feedbackTemplate() {
+  feedbackTemplate() {
     let validFeedbackTemplate = '';
     let invalidFeedbackTemplate = '';
     if (this.validFeedbackMessage) {
@@ -81,7 +81,7 @@ class InputImage extends LitWithoutShadowDom {
     return html`${validFeedbackTemplate}${invalidFeedbackTemplate}`;
   }
 
-  _imagePreviewTemplate() {
+  imagePreviewTemplate() {
     const imgChangeTemplate = html`
       <div
         class="w-100 h-100 ${this.defaultImage ? 'd-none' : ''}"
@@ -108,5 +108,4 @@ class InputImage extends LitWithoutShadowDom {
     return html` ${imgChangeTemplate} `;
   }
 }
-
 customElements.define('input-image', InputImage);

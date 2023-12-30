@@ -1,12 +1,13 @@
 import { html } from 'lit';
-import LitWithoutShadowDom from './base/LitWithoutShadowDom';
 import { msg, updateWhenLocaleChanges } from '@lit/localize';
+import LitWithoutShadowDom from './base/LitWithoutShadowDom';
 
 class CardAbout extends LitWithoutShadowDom {
   constructor() {
     super();
     updateWhenLocaleChanges(this);
   }
+
   render() {
     return html`
       <div class="card mb-3 border border-0 shadow w-50 mx-auto" id="card">

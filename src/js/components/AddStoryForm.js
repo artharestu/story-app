@@ -1,12 +1,13 @@
 import { html } from 'lit';
-import LitWithoutShadowDom from './base/LitWithoutShadowDom';
 import { msg, updateWhenLocaleChanges } from '@lit/localize';
+import LitWithoutShadowDom from './base/LitWithoutShadowDom';
 
 class AddStoryForm extends LitWithoutShadowDom {
   constructor() {
     super();
     updateWhenLocaleChanges(this);
   }
+
   render() {
     return html`
       <form class="d-flex flex-column align-items-center justify-content-center 
@@ -20,7 +21,7 @@ class AddStoryForm extends LitWithoutShadowDom {
         </textarea-with-validation>
         <input id="photoUrl" class="form-control w-100 mb-3" type="file" accept="image/*" required />             
         <button class="btn btn-outline-primary w-100" type="submit">
-          ${msg(`Post`)}
+          ${msg('Post')}
         </button>        
       </form>
     `;

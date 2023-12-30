@@ -32,7 +32,6 @@ class FooterStoryApp extends LitElement {
       </footer>
     `;
   }
-
 }
 
 customElements.define('footer-story-app', FooterStoryApp);

@@ -1,15 +1,15 @@
 // Import our custom CSS
 import '../sass/main.scss';
 
-// Import javascript file as needed
+// Import Bootstrap
+// eslint-disable-next-line no-unused-vars
+import * as bootstrap from 'bootstrap';
+
 import Dashboard from './pages/dashboard';
 import Add from './pages/add';
 
 import Login from './pages/auth/login';
 import Register from './pages/auth/register';
-
-// Import Bootstrap
-import * as bootstrap from 'bootstrap';
 
 // Import components
 import './components';

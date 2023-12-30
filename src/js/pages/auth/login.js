@@ -4,52 +4,103 @@ import Utils from '../../utils/utils';
 import CheckUserAuth from './check-user-auth';
 
 const Login = {
-  async init() {
+  init() {
     CheckUserAuth.checkLoginState();
 
-    this._initialListener();
+    this.initialListener();
   },
 
-  _initialListener() {
-    const loginForm = document.querySelector('#loginForm');
-    loginForm.addEventListener(
+  initialListener() {
+    const form = document.querySelector('form');
+    const inputPassword = document.getElementById('validationCustomPassword');
+    const invalidFeedback = document.querySelector('.invalid-feedback-password');
+    const inputEmail = document.getElementById('validationCustomRecordEmail');
+    const invalidFeedbackEmail = document.querySelector('.invalid-feedback-email');
+
+    form.addEventListener(
       'submit',
       async (event) => {
-        event.preventDefault();
-        event.stopPropagation();
+        if (!form.checkValidity()) {
+          event.preventDefault();
+          event.stopPropagation();
+        }
 
-        loginForm.classList.add('was-validated');
+        let isValidEmailAddress = false;
+        let isValidPassword = false;
 
-        await this._getLogged();
+        if (inputPassword.value === '') {
+          invalidFeedback.textContent = invalidFeedback.getAttribute('data-error-empty');
+          inputPassword.setCustomValidity('Password cannot be empty');
+        } else if (inputPassword.value.length < 8) {
+          invalidFeedback.textContent = invalidFeedback.getAttribute('data-error-length');
+          inputPassword.setCustomValidity('Password must be at least 8 characters');
+        } else {
+          invalidFeedback.textContent = '';
+          inputPassword.setCustomValidity('');
+          isValidPassword = true;
+        }
+
+        if (inputEmail.value === '') {
+          invalidFeedbackEmail.textContent = 'Email cannot be empty';
+          inputEmail.setCustomValidity('Email cannot be empty');
+        } else if (!this.isValidEmail(inputEmail.value)) {
+          invalidFeedbackEmail.textContent = invalidFeedbackEmail.getAttribute('data-error-email');
+          inputEmail.setCustomValidity('Invalid email address');
+        } else {
+          invalidFeedbackEmail.textContent = '';
+          inputEmail.setCustomValidity('');
+          isValidEmailAddress = true;
+        }
+
+        if (isValidEmailAddress && isValidPassword) {
+          await this.getLogged();
+        }
+
+        form.classList.add('was-validated');
       },
       false,
     );
+
+    const viewPassword = document.querySelector('#viewpassword');
+    viewPassword.addEventListener(
+      'click',
+      () => {
+        if (inputPassword.type === 'password') {
+          inputPassword.type = 'text';
+          viewPassword.innerHTML = '<i class="bi bi-eye"></i>';
+        } else {
+          inputPassword.type = 'password';
+          viewPassword.innerHTML = '<i class="bi bi-eye-slash"></i>';
+        }
+      },
+    );
   },
 
-  async _getLogged() {
-    const formData = this._getFormData();
+  isValidEmail(email) {
+    return /\S+@\S+\.\S+/.test(email);
+  },
 
-    if (this._validateFormData({ ...formData })) {
-      console.log('formData');
-      console.log(formData);
+  async getLogged() {
+    const formData = this.getFormData();
 
-      this._login(true);
+    if (this.validateFormData({ ...formData })) {
+      this.login(true);
 
       try {
         const response = await Auth.login({
           email: formData.email,
           password: formData.password,
         });
-        console.log(response);
+        console.log(response.data);
         Utils.setUserToken(Config.USER_TOKEN_KEY, response.data.loginResult.token);
 
-        this._goToDashboardPage();
+        this.goToDashboardPage();
       } catch (error) {
-        this._login(false);
+        console.log(error);
+        this.login(false);
         const errorMessage = document.querySelector('#errormessage');
-
         if (error.response) {
-          errorMessage.innerHTML = "Message: " + error.response.data.message;
+          errorMessage.innerHTML = 'Email or password is incorrect!';
         } else if (error.request) {
           console.error(error.request);
         } else {
@@ -59,7 +110,7 @@ const Login = {
     }
   },
 
-  _getFormData() {
+  getFormData() {
     const email = document.querySelector('#validationCustomRecordEmail');
     const password = document.querySelector('#validationCustomPassword');
 
@@ -69,7 +120,7 @@ const Login = {
     };
   },
 
-  _login(status) {
+  login(status) {
     const loginButton = document.querySelector('#loginbutton');
     const inputEmail = document.querySelector('#validationCustomRecordEmail');
     const inputPassword = document.querySelector('#validationCustomPassword');
@@ -89,15 +140,14 @@ const Login = {
     }
   },
 
-  _validateFormData(formData) {
+  validateFormData(formData) {
     const formDataFiltered = Object.values(formData).filter((item) => item === '');
 
     return formDataFiltered.length === 0;
   },
 
-  _goToDashboardPage() {
+  goToDashboardPage() {
     window.location.href = '/';
   },
 };
-
 export default Login;

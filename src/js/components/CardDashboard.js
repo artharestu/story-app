@@ -21,7 +21,9 @@ class CardDashboard extends LitWithoutShadowDom {
   }
 
   render() {
-    const { id, storyname, description, createdAt, photoUrl } = this;
+    const {
+      id, storyname, description, createdAt, photoUrl,
+    } = this;
     const shortDescription = description.substring(0, 160);
     return html`  
       <div class="card mb-3 border border-0 shadow me-3" id="${id}">

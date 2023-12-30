@@ -7,22 +7,20 @@ const CheckUserAuth = {
   checkLoginState() {
     const userToken = Utils.getUserToken(Config.USER_TOKEN_KEY);
     const isUserSignedIn = Boolean(userToken);
-    const isUserOnAuthPage = this._isUserOnAuthPage(this.excludeRedirectPage);
+    const isUserOnAuthPage = this.isUserOnAuthPage(this.excludeRedirectPage);
 
     if (isUserSignedIn) {
       if (isUserOnAuthPage) {
         window.location.href = '/';
       } else {
-        this._showLoginMenuOrUserLogMenu(isUserSignedIn);
+        this.showLoginMenuOrUserLogMenu(isUserSignedIn);
       }
-    } else {
-      if (!isUserOnAuthPage) {
-        window.location.href = '/auth/login.html';
-      }
+    } else if (!isUserOnAuthPage) {
+      window.location.href = '/auth/login.html';
     }
   },
 
-  _showLoginMenuOrUserLogMenu(userLoginState) {
+  showLoginMenuOrUserLogMenu(userLoginState) {
     const loginMenu = document.querySelector('#loginMenu');
     const userLoggedMenu = document.querySelector('#userLoggedMenu');
 
@@ -43,10 +41,9 @@ const CheckUserAuth = {
     userLoggedMenu?.classList.remove('d-none');
   },
 
-  _isUserOnAuthPage(pages) {
+  isUserOnAuthPage(pages) {
     const filteredPages = pages.filter((item) => window.location.pathname.endsWith(item));
     return Boolean(filteredPages.length);
   },
 };
-
 export default CheckUserAuth;

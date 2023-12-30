@@ -16,17 +16,20 @@
         <div class="col-12 col-md-6 col-lg-4">
           <h1 class="text-center">Login</h1>
 
-          <form id="loginForm" novalidate>
-            <div class="mb-3">
+          <form id="loginForm" class="needs-validation" novalidate>
+            <!-- <div class="mb-3">
               <input-with-validation type="text" id="validationCustomRecordEmail" class="w-100" label="Email"
                 invalidFeedbackMessage="Required" required>
               </input-with-validation>
+            </div> -->
+            <div class="mb-3">
+              <input-email-with-validation class="w-100" label="Email" invalidFeedbackMessage="Required" required>
+              </input-email-with-validation>
             </div>
 
             <div class="mb-3">
-              <input-with-validation type="password" id="validationCustomPassword" class="w-100" label="Password"
-                invalidFeedbackMessage="Required" required>
-              </input-with-validation>
+              <input-password-with-validation class="w-100" label="Password" invalidFeedbackMessage="Required" required>
+              </input-password-with-validation>
             </div>
 
             <div class="col-12 text-end">
@@ -35,7 +38,7 @@
               </button>
             </div>
             <div>
-              <p class="text-primary font-monospace text-sm text-center" id="errormessage"></p>
+              <p class="text-danger font-monospace text-sm text-center mt-1" id="errormessage"></p>
             </div>
           </form>
 
