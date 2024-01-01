@@ -20,10 +20,9 @@ const Login = {
     form.addEventListener(
       'submit',
       async (event) => {
-        if (!form.checkValidity()) {
-          event.preventDefault();
-          event.stopPropagation();
-        }
+        form.classList.add('was-validated');
+        event.preventDefault();
+        event.stopPropagation();
 
         let isValidEmailAddress = false;
         let isValidPassword = false;
@@ -55,8 +54,6 @@ const Login = {
         if (isValidEmailAddress && isValidPassword) {
           await this.getLogged();
         }
-
-        form.classList.add('was-validated');
       },
       false,
     );
